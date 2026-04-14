@@ -1,4 +1,7 @@
-use std::ops::{Index, IndexMut};
+use std::{
+    fmt,
+    ops::{Index, IndexMut},
+};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Shape(pub isize, pub isize);
@@ -26,6 +29,13 @@ impl Shape {
     }
     pub fn idx_to_rc(&self, idx: isize) -> (isize, isize) {
         (idx / self.cols(), idx % self.cols())
+    }
+}
+
+impl fmt::Display for Shape {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let Shape(rows, cols) = self;
+        write!(f, "{rows},{cols}")
     }
 }
 
@@ -292,6 +302,23 @@ pub struct GridView<'g, T> {
     shape: Shape,
     stride: Stride,
     buffer: &'g [T],
+}
+
+impl<'g, T> GridView<'g, T> {
+    pub fn from_parts(shape: Shape, stride: Stride, buffer: &'g [T]) -> GridView<'g, T> {
+        if shape.rows() < 0 || shape.cols() < 0 {
+            panic!("negative shapes are not allowed: {shape}");
+        }
+        if stride.per_row() < 0 || stride.per_col() < 0 {
+            panic!("negative strides are not allowed: {stride:?}");
+        }
+        // TODO: check if given shape and stride are valid
+        GridView {
+            shape,
+            stride,
+            buffer,
+        }
+    }
 }
 
 impl<'g, T> Gridlike<T> for GridView<'g, T> {
