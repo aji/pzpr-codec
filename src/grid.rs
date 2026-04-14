@@ -192,6 +192,7 @@ impl<'g, T> Iterator for Cells<'g, T> {
     }
 }
 
+#[derive(Clone)]
 pub struct Grid<T> {
     shape: Shape,
     buffer: Vec<T>,
@@ -286,6 +287,7 @@ impl<T> IndexMut<usize> for Grid<T> {
     }
 }
 
+#[derive(Copy, Clone)]
 pub struct GridView<'g, T> {
     shape: Shape,
     stride: Stride,
