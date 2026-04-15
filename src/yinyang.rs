@@ -1,8 +1,8 @@
-use puzzle_grid::array::{Array, ArrayBuffer};
+use puzzle_grid::array::{Array, ArrayBuffer, ArrayVec};
 
 use crate::common::base27;
 
-pub fn decode(s: &str) -> Result<ArrayBuffer<Cell>, String> {
+pub fn decode(s: &str) -> Result<ArrayVec<Cell>, String> {
     let (yinyang, s) = s.split_once('/').ok_or("missing '/'")?;
     let (cols, s) = s.split_once('/').ok_or("missing '/'")?;
     let (rows, gridstr) = s.split_once('/').ok_or("missing '/'")?;
@@ -24,15 +24,12 @@ pub fn decode(s: &str) -> Result<ArrayBuffer<Cell>, String> {
         .into_iter()
         .take((rows * cols) as usize)
         .map(Cell::try_from_digit)
-        .collect::<Result<ArrayBuffer<_>, _>>()?
+        .collect::<Result<ArrayVec<_>, _>>()?
         .reshape(rows, cols)
         .expect("reshape error"))
 }
 
-pub fn encode<B>(board: &Array<Cell, B>) -> Result<String, String>
-where
-    B: AsRef<[Cell]>,
-{
+pub fn encode<B: ArrayBuffer<Item = Cell>>(board: &Array<B>) -> Result<String, String> {
     let grid = base27::ib3_to_sb27be(board.iter().map(Cell::to_digit))?;
     Ok(format!("yinyang/{}/{}/{grid}", board.cols(), board.rows(),))
 }

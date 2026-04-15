@@ -5,7 +5,7 @@ version = 4
 [[package]]
 name = "puzzle-grid"
 version = "0.1.0"
-source = "git+https://github.com/aji/puzzle-grid.git#6b8dcbd412274a7626382f93b967d5e368893866"
+source = "git+https://github.com/aji/puzzle-grid.git#238056f14ea2f2490b0ac0e6a4bd1ac9612a9c9e"
 
 [[package]]
 name = "pzpr-codec"
