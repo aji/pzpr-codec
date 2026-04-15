@@ -97,7 +97,7 @@ impl AsciiLut {
 
 #[cfg(test)]
 mod test {
-    use crate::variety::common::lut::AsciiLut;
+    use crate::common::lut::AsciiLut;
 
     #[test]
     pub fn test_lut() {

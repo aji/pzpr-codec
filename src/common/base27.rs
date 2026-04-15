@@ -1,4 +1,4 @@
-use crate::variety::common::lut;
+use crate::common::lut;
 
 static B27_ALPHABET: &'static str = "0123456789abcdefghijklmnopq";
 static B27_LUT: lut::AsciiLut = lut::AsciiLut::from_alphabet_case_insensitive(B27_ALPHABET);

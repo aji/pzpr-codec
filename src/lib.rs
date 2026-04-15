@@ -1,2 +1,2 @@
-pub mod grid;
-pub mod variety;
+pub mod common;
+pub mod yinyang;
